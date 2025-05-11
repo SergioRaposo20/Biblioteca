@@ -1,0 +1,84 @@
+@startuml
+
+left to right direction
+
+package Usuario {
+actor Aluno_Professor
+actor Bibliotecario
+actor Administrador
+}
+
+
+Aluno_Professor <|-- Bibliotecario 
+Bibliotecario <|-- Administrador
+
+
+package Biblioteca_Aluno_Professor {
+usecase Buscar_livros
+usecase Reservar
+usecase Renovar 
+usecase Empréstimos
+usecase Devolve_livro
+}
+
+package Biblioteca_Bibliotecario {
+usecase Aprovar_Empréstimos
+usecase Registrar_Devoluções
+}
+
+package Biblioteca_Administrador {
+usecase Gerenciar_cadastros
+usecase Excluir_registros
+usecase Gerar_relatórios
+}
+
+package Multa {
+usecase GeraMulta
+}
+
+package Biblioteca_BackGround {
+usecase Autentica_Usuario
+usecase verifica_status_livro
+usecase Checa_atraso_usuario
+}
+
+:Aluno_Professor: --> Buscar_livros
+:Aluno_Professor: --> Reservar
+:Aluno_Professor: --> Renovar
+:Aluno_Professor: --> Empréstimos
+:Aluno_Professor: --> Devolve_livro
+
+:Bibliotecario: --> Aprovar_Empréstimos
+:Bibliotecario: --> Registrar_Devoluções
+
+:Administrador: --> Gerenciar_cadastros
+:Administrador: --> Excluir_registros
+:Administrador: --> Gerar_relatórios
+
+
+Buscar_livros --> Autentica_Usuario
+Reservar --> Autentica_Usuario 
+Renovar --> Autentica_Usuario
+Empréstimos --> Autentica_Usuario
+Aprovar_Empréstimos --> Autentica_Usuario
+Registrar_Devoluções --> Autentica_Usuario
+Gerenciar_cadastros --> Autentica_Usuario
+Excluir_registros --> Autentica_Usuario
+Gerar_relatórios --> Autentica_Usuario
+Devolve_livro --> Autentica_Usuario
+
+Reservar --> verifica_status_livro
+Renovar --> verifica_status_livro
+Empréstimos --> verifica_status_livro
+Aprovar_Empréstimos --> verifica_status_livro
+Devolve_livro --> verifica_status_livro
+
+Reservar --> Checa_atraso_usuario
+Renovar --> Checa_atraso_usuario
+Empréstimos --> Checa_atraso_usuario
+Aprovar_Empréstimos --> Checa_atraso_usuario
+Devolve_livro --> Checa_atraso_usuario
+
+Checa_atraso_usuario ..> GeraMulta
+
+@enduml
