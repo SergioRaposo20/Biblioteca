@@ -1,0 +1,82 @@
+@startuml
+
+enum Status {
+  Disponivel
+  Emprestado
+  Reservado
+}
+
+class Livro {
+  +Id: int
+  +Autor: string
+  +Titulo: string
+  +Status: Status
+}
+
+class Usuario {
+  +Id: int
+  +Senha: string
+  +Nome: string
+  +ReservarLivro()
+  +RenovaEmprestimo()
+  +DevolveLivro()
+  +BuscaLivro()
+}
+
+class Livro_Usuario_Emprestado {
+  +IdLivro: int
+  +IdUsuario: int
+  +DataEmprestimo: date
+  +DataReserva: date 
+  +DataDevolucao: date
+}
+
+class Multa_Usuario {
+  +Id: int
+  +Valor: double
+  +Vencimento: date
+  +IdUsuario: int
+}
+
+interface FactoryUsuario {
+ +CreateUsuario():Usuario
+}
+
+class Aluno_Professor {
+  +SolicitaEmprestimo()
+}
+
+class Administrador {
+  +GeraRelatorio()
+}
+
+class Bibliotecario {
+  +AutorizaReserva()
+}
+
+class Aluno_ProfessorFactory {
+  +CreateUsuario():Usuario
+}
+
+class AdministradorFactory {
+  +CreateUsuario():Usuario
+}
+
+class BibliotecarioFactory {
+  +CreateUsuario():Usuario
+}
+
+' Relacionamentos
+Livro "1" -- "1..*" Livro_Usuario_Emprestado
+Usuario "1" -- "1..*" Livro_Usuario_Emprestado
+Usuario "1" -- "1..*" Multa_Usuario
+
+Usuario <|-- Aluno_Professor
+Usuario <|-- Administrador
+Usuario <|-- Bibliotecario
+
+FactoryUsuario <|-- Aluno_ProfessorFactory
+FactoryUsuario <|-- AdministradorFactory
+FactoryUsuario <|-- BibliotecarioFactory
+
+@enduml
