@@ -1,0 +1,13 @@
+@startuml
+actor Aluno_Professor
+actor "Bibliotecario" as B
+participant "Livro" as L
+participant "Livro_Usuario_Emprestado" as LUE
+
+Aluno_Professor -> L : SolicitarEmprestimo()
+L -> Aluno_Professor : VerificarStatus()
+L -> B : AguardaAprovaçãoDoEmprestimo()
+B -> LUE : RegistrarEmprestimo()
+LUE -> B : ConfirmaEmprestimo()
+LUE -> Aluno_Professor : ConfirmaEmprestimo()
+@enduml
