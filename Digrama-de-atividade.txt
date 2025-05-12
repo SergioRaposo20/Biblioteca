@@ -1,0 +1,27 @@
+@startuml
+start
+
+:Solicita renovação;
+    if (Usuário autenticado?) then (sim)
+    
+        if (Usuario com entregas em dia) then (sim)
+          if (Livro disponível?) then (sim)
+            if (Limite de renovações atingido?) then (não)
+              :Renovar empréstimo;
+              :Atualizar data de devolução;
+              :Confirmar renovação ao usuário;
+            else
+              :Exibir mensagem: "Limite de renovações atingido";
+            endif
+          else
+            :Exibir mensagem: "Livro não disponível para renovação";
+          endif
+        else
+          :Gera Multa e Exibe mensagem: "Não permitido renovação. Usuario com livro em atraso (multa gerada).";
+        endif
+    else
+      :Exibir mensagem: "Usuário não autenticado";   
+    endif
+
+stop
+@enduml
