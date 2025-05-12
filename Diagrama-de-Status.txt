@@ -1,0 +1,17 @@
+@startuml
+start
+
+:Verificar status do livro;
+
+if (Livro emprestado?) then (sim)
+  :Marcar como Emprestado;
+else
+  if (Livro reservado?) then (sim)
+    :Marcar como Reservado;
+  else
+    :Marcar como Disponível;
+  endif
+endif
+
+stop
+@enduml
